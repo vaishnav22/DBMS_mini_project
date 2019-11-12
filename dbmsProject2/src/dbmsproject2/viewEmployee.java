@@ -30,6 +30,7 @@ public class viewEmployee extends javax.swing.JFrame {
      */
     public viewEmployee() {
         initComponents();
+        setTitle("View Employee");
         
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
@@ -307,12 +308,15 @@ public class viewEmployee extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = jTable1.getSelectedRow();
         String cell = jTable1.getModel().getValueAt(row, 0).toString();
-        String sql = "delete from employee where eid= "+cell;
+        String sql = "delete from employee where eid='"+cell+"'";
+        String sql1 = "delete from order1 where eid='"+cell+"'";
         try{
             Class.forName("com.mysql.jdbc.Driver");          
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stock","root","vaishnav");
-            PreparedStatement pst = con.prepareStatement(sql);
+            PreparedStatement pst = con.prepareStatement(sql1);
+            PreparedStatement pst1 = con.prepareStatement(sql);
             pst.execute();
+            pst1.execute();
             JOptionPane.showMessageDialog(null,"deleted Succesfully");
             String sqlRefresh = "select * from employee";
             Statement stmt = con.createStatement();
@@ -353,7 +357,7 @@ public class viewEmployee extends javax.swing.JFrame {
              rs.close();
              con.close();
          }catch(ClassNotFoundException | SQLException e){
-//            JOptionPane.showMessageDialog(null,e);
+            JOptionPane.showMessageDialog(null,"could not update!");
          }
     }//GEN-LAST:event_jLabel8MouseClicked
 

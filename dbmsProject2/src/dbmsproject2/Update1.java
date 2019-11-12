@@ -31,6 +31,7 @@ public class Update1 extends javax.swing.JFrame {
     
     public Update1() {
         initComponents();
+        setTitle("Update Stock");
         
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
@@ -43,6 +44,7 @@ public class Update1 extends javax.swing.JFrame {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+
             rs.close();
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e);

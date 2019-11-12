@@ -24,6 +24,7 @@ public class addItem extends javax.swing.JFrame {
      */
     public addItem() {
         initComponents();
+        setTitle("Add Item");
        
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();

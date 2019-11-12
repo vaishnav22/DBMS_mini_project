@@ -31,6 +31,28 @@ public class placeOrder extends javax.swing.JFrame {
      */
     public placeOrder() {
         initComponents();
+        setTitle("Place Order");
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stock","root","vaishnav");
+            String sql = "select eid from employee";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                String eid = rs.getString("eid");
+                combo.addItem(eid);
+            }
+            
+            rs.close();
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.println(e);
+        }
+        
+        
+        
+        
+        
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2,size.height/2 - getHeight()/2);
@@ -64,6 +86,7 @@ public class placeOrder extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -78,12 +101,21 @@ public class placeOrder extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        combo = new javax.swing.JComboBox<>();
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel2.setText("Order Number");
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1120, 665));
@@ -124,35 +156,35 @@ public class placeOrder extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dbmsproject2/ions/Order-PNG-Background-Image.png"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(40, -10, 440, 350);
+        jLabel1.setBounds(40, 0, 440, 350);
 
         jLabel3.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel3.setText("Product Code");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(40, 380, 110, 20);
+        jLabel3.setBounds(40, 440, 110, 20);
 
         jTextField2.setEditable(false);
         jTextField2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(260, 370, 220, 40);
+        jTextField2.setBounds(260, 430, 220, 40);
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setText("Quantity");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(40, 520, 70, 30);
+        jLabel4.setBounds(40, 550, 70, 30);
 
         jTextField3.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(260, 510, 220, 40);
+        jTextField3.setBounds(260, 540, 220, 40);
 
         jLabel5.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel5.setText("Product detail");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 450, 120, 30);
+        jLabel5.setBounds(40, 490, 120, 30);
 
         jTextField4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(260, 440, 220, 40);
+        jTextField4.setBounds(260, 480, 220, 40);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dbmsproject2/ions/plaeOrder.png"))); // NOI18N
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -175,11 +207,33 @@ public class placeOrder extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel8.setText("Country");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(40, 590, 100, 30);
+        jLabel8.setBounds(40, 610, 100, 30);
 
         jTextField5.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(260, 580, 220, 40);
+        jTextField5.setBounds(260, 600, 220, 40);
+
+        jLabel9.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel9.setText("Employee ID");
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(40, 380, 110, 30);
+
+        combo.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------Employee ID ------" }));
+        combo.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                comboCaretPositionChanged(evt);
+            }
+        });
+        combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboActionPerformed(evt);
+            }
+        });
+        jPanel1.add(combo);
+        combo.setBounds(260, 370, 220, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,11 +269,12 @@ public class placeOrder extends javax.swing.JFrame {
 //        String quantity = jTextField3.getText();
         String country = jTextField5.getText();
         Random rd = new Random();
-        int rand_int = rd.nextInt(1000);
+        int rand_int = rd.nextInt(2000);
         System.out.println(rand_int);
         int selectedRow = jTable1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
         int quantity = (int) jTable1.getModel().getValueAt(selectedRow, 2);
+        Object obj = combo.getSelectedItem();
         if(jTextField3.getText().equals("") || jTextField5.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Please provide Quantity and city to place Order!");
         }else{
@@ -237,7 +292,7 @@ public class placeOrder extends javax.swing.JFrame {
              pst.setString(2, jTextField2.getText());
              pst.executeUpdate();
              JOptionPane.showMessageDialog(null, "Order Placed");
-             pst.executeUpdate("insert into order1 values('"+rand_int+"','"+jTextField2.getText()+"',"+jTextField3.getText()+",'"+jTextField5.getText()+"')");
+             pst.executeUpdate("insert into order1 values('"+rand_int+"','"+jTextField2.getText()+"',"+jTextField3.getText()+",'"+jTextField5.getText()+"','"+obj+"')");
              String sqlRefresh = "select productcode,productDetail,quantity from stockitem ";
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(sqlRefresh);
@@ -255,6 +310,18 @@ public class placeOrder extends javax.swing.JFrame {
          }
         }
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboActionPerformed
+
+    private void comboCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_comboCaretPositionChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCaretPositionChanged
 
     /**
      * @param args the command line arguments
@@ -292,6 +359,8 @@ public class placeOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> combo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -300,6 +369,7 @@ public class placeOrder extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

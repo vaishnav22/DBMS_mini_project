@@ -19,6 +19,7 @@ public class adminHome extends javax.swing.JFrame {
      */
     public adminHome() {
         initComponents();
+        setTitle("Admin Home Page");
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2,size.height/2 - getHeight()/2);

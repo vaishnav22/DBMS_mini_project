@@ -44,6 +44,7 @@ public class ViewInventory extends javax.swing.JFrame {
         
     public ViewInventory() {
         initComponents();
+        setTitle("View Stock");
       
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
@@ -221,12 +222,15 @@ public class ViewInventory extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = jTable1.getSelectedRow();
         String cell = jTable1.getModel().getValueAt(row, 0).toString();
-        String sql = "delete from stockitem where productCode= "+cell;
+        String sql = "delete from stockitem where productCode='"+cell+"'";
+        String sql1 = "delete from order1 where productCode= '"+cell+"'";
         try{
             Class.forName("com.mysql.jdbc.Driver");          
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stock","root","vaishnav");
+            PreparedStatement pst1 = con.prepareStatement(sql1);
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.execute();
+            pst1.execute();
+            pst.execute();           
             JOptionPane.showMessageDialog(null,"deleted Succesfully");
             String sqlRefresh = "select * from stockitem";
             Statement stmt = con.createStatement();

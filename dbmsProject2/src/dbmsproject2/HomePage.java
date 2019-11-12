@@ -26,6 +26,7 @@ public class HomePage extends javax.swing.JFrame {
      */
     public HomePage() {
         initComponents();
+        setTitle("Home Page");
       
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
